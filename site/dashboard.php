@@ -47,7 +47,7 @@ function buildQueryString($params = []) {
         return $value !== '';
     });
 
-    return http_build_query($filteredParams);
+    return $filteredParams ? '?' . http_build_query($filteredParams) : '';
 }
 ?>
 
@@ -77,10 +77,10 @@ function buildQueryString($params = []) {
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav me-auto">
                 <li class="nav-item">
-                    <a class="nav-link <?= (!isset($_GET['view']) || $_GET['view'] !== 'rating') ? 'active' : '' ?>" href="dashboard.php">Задачи</a>
+                    <a class="nav-link <?= (!isset($_GET['view']) || $_GET['view'] !== 'rating') ? 'active' : '' ?>" href="<?= buildQueryString(['view' => '']) ?>">Задачи</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link <?= (isset($_GET['view']) && $_GET['view'] === 'rating') ? 'active' : '' ?>" href="?<?= buildQueryString(['view' => 'rating']) ?>">Рейтинг</a>
+                    <a class="nav-link <?= (isset($_GET['view']) && $_GET['view'] === 'rating') ? 'active' : '' ?>" href="<?= buildQueryString(['view' => 'rating']) ?>">Рейтинг</a>
                 </li>
             </ul>
             <div class="d-flex align-items-center">
@@ -137,10 +137,10 @@ function buildQueryString($params = []) {
                             Сложность <?= $difficulty ? "($difficulty)" : '' ?>
                         </button>
                         <ul class="dropdown-menu dropdown-menu-md-end">
-                            <li><a class="dropdown-item" href="?">Все</a></li>
-                            <li><a class="dropdown-item" href="?difficulty=Легкая">Легкая</a></li>
-                            <li><a class="dropdown-item" href="?difficulty=Средняя">Средняя</a></li>
-                            <li><a class="dropdown-item" href="?difficulty=Сложная">Сложная</a></li>
+                            <li><a class="dropdown-item" href="<?= buildQueryString(['difficulty' => '']) ?>">Все</a></li>
+                            <li><a class="dropdown-item" href="<?= buildQueryString(['difficulty' => 'Легкая']) ?>">Легкая</a></li>
+                            <li><a class="dropdown-item" href="<?= buildQueryString(['difficulty' => 'Средняя']) ?>">Средняя</a></li>
+                            <li><a class="dropdown-item" href="<?= buildQueryString(['difficulty' => 'Сложная']) ?>">Сложная</a></li>
                         </ul>
                     </div>
                     <div class="dropdown">
@@ -148,10 +148,10 @@ function buildQueryString($params = []) {
                             Статус <?= $status ? "($status)" : '' ?>
                         </button>
                         <ul class="dropdown-menu dropdown-menu-md-end">
-                            <li><a class="dropdown-item" href="?">Все</a></li>
-                            <li><a class="dropdown-item" href="?status=Не решена">Не решена</a></li>
-                            <li><a class="dropdown-item" href="?status=В процессе">В процессе</a></li>
-                            <li><a class="dropdown-item" href="?status=Решена">Решена</a></li>
+                            <li><a class="dropdown-item" href="<?= buildQueryString(['status' => '']) ?>">Все</a></li>
+                            <li><a class="dropdown-item" href="<?= buildQueryString(['status' => 'Не решена']) ?>">Не решена</a></li>
+                            <li><a class="dropdown-item" href="<?= buildQueryString(['status' => 'В процессе']) ?>">В процессе</a></li>
+                            <li><a class="dropdown-item" href="<?= buildQueryString(['status' => 'Решена']) ?>">Решена</a></li>
                         </ul>
                     </div>
                 </div>
@@ -165,12 +165,12 @@ function buildQueryString($params = []) {
                 <div class="col-md-4 mb-4">
                     <div class="card h-100 <?= $isSolved ? 'border-success' : '' ?>">
                         <div class="card-header d-flex justify-content-between align-items-center">
-                            <span class="badge bg-<?= getDifficultyBadgeClass($task['difficulty']) ?>">
-                                <?= $task['difficulty'] ?>
-                            </span>
+                    <span class="badge bg-<?= getDifficultyBadgeClass($task['difficulty']) ?>">
+                        <?= $task['difficulty'] ?>
+                    </span>
                             <span class="badge bg-<?= $isSolved ? 'success' : getStatusBadgeClass($task['status']) ?>">
-                                <?= $isSolved ? 'Решена' : $task['status'] ?>
-                            </span>
+                        <?= $isSolved ? 'Решена' : $task['status'] ?>
+                    </span>
                         </div>
                         <div class="card-body">
                             <h5 class="card-title"><?= $task['title'] ?></h5>
@@ -185,6 +185,18 @@ function buildQueryString($params = []) {
                     </div>
                 </div>
             <?php endforeach; ?>
+
+            <?php if (empty($tasks)): ?>
+                <div class="col-12" style="margin-bottom: 3rem">
+                    <div class="card">
+                        <div class="card-body text-center py-5">
+                            <h4 class="text-muted">Задачи не найдены</h4>
+                            <p class="text-muted">Попробуйте изменить параметры фильтрации</p>
+                            <a href="?" class="btn btn-primary mt-3">Сбросить фильтры</a>
+                        </div>
+                    </div>
+                </div>
+            <?php endif; ?>
         </div>
     <?php else: ?>
         <h2 class="mb-4">Рейтинг пользователей</h2>
