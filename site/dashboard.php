@@ -65,6 +65,22 @@ function buildQueryString($params = []) {
         .h5, h5 {
             margin-bottom: 0 !important;
         }
+
+        @media (max-width: 992px) {
+            .flex-filer {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+            }
+
+            .flex-filer .flex-filer-1 {
+                width: fit-content;
+            }
+
+            .flex-filer .mgcostule {
+                margin-left: 29%;
+            }
+        }
     </style>
 </head>
 <body>
@@ -77,7 +93,7 @@ function buildQueryString($params = []) {
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav me-auto">
                 <li class="nav-item">
-                    <a class="nav-link <?= (!isset($_GET['view']) || $_GET['view'] !== 'rating') ? 'active' : '' ?>" href="<?= buildQueryString(['view' => '']) ?>">Задачи</a>
+                    <a class="nav-link <?= (!isset($_GET['view']) || $_GET['view'] !== 'rating') ? 'active' : '' ?>" href="?">Задачи</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link <?= (isset($_GET['view']) && $_GET['view'] === 'rating') ? 'active' : '' ?>" href="<?= buildQueryString(['view' => 'rating']) ?>">Рейтинг</a>
@@ -126,11 +142,11 @@ function buildQueryString($params = []) {
 
 <div class="container mt-4">
     <?php if (!isset($_GET['view']) || $_GET['view'] !== 'rating'): ?>
-        <div class="row mb-4">
+        <div class="row mb-4 flex-filer">
             <div class="col-6">
                 <h2>Список задач</h2>
             </div>
-            <div class="col-12 col-md-6">
+            <div class="col-12 col-md-6 flex-filer-1">
                 <div class="d-flex flex-column flex-md-row justify-content-md-end gap-2">
                     <div class="dropdown mb-2 mb-md-0">
                         <button class="btn btn-outline-secondary btn-sm dropdown-toggle" type="button" id="difficultyFilter" data-bs-toggle="dropdown">
@@ -143,7 +159,7 @@ function buildQueryString($params = []) {
                             <li><a class="dropdown-item" href="<?= buildQueryString(['difficulty' => 'Сложная']) ?>">Сложная</a></li>
                         </ul>
                     </div>
-                    <div class="dropdown">
+                    <div class="dropdown mgcostule">
                         <button class="btn btn-outline-secondary btn-sm dropdown-toggle" type="button" id="statusFilter" data-bs-toggle="dropdown">
                             Статус <?= $status ? "($status)" : '' ?>
                         </button>
