@@ -530,7 +530,7 @@ $currentYear = date('Y');
                     <div class="feature-icon">
                         <i class="fas fa-comment-alt"></i>
                     </div>
-                    <h3 class="h4 mb-3">Детальная аналитика <br> <span class="badge-future">в разработке</span></h3>
+                    <h3 class="h4 mb-3">Детальная аналитика</h3>
                     <p class="text-muted mb-0">Понятные сообщения об ошибках с примерами исправлений и рекомендациями</p>
                 </div>
             </div>
@@ -548,7 +548,7 @@ $currentYear = date('Y');
                     <div class="feature-icon">
                         <i class="fas fa-brain"></i>
                     </div>
-                    <h3 class="h4 mb-3">AI-анализ <span class="badge-future">в разработке</span></h3>
+                    <h3 class="h4 mb-3">AI-анализ</h3>
                     <p class="text-muted mb-0">Умные подсказки и персонализированные рекомендации по улучшению кода</p>
                 </div>
             </div>
@@ -669,7 +669,6 @@ $currentYear = date('Y');
     </div>
 </section>
 
-<!-- Модальное окно авторизации -->
 <?php if (!$isLoggedIn): ?>
     <div class="modal fade" id="authModal" tabindex="-1" aria-labelledby="authModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
@@ -689,7 +688,6 @@ $currentYear = date('Y');
                     </ul>
 
                     <div class="tab-content pt-4" id="authTabsContent">
-                        <!-- Форма входа -->
                         <div class="tab-pane fade show active" id="login" role="tabpanel" aria-labelledby="login-tab">
                             <form method="POST" action="index.php">
                                 <input type="hidden" name="login" value="1">

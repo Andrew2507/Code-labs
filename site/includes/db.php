@@ -122,7 +122,6 @@ function checkSolution($submissionId, $taskId, $filePath) {
                         'actual' => $test['actual'] ?? 'N/A'
                     ];
 
-                    // Добавляем AI feedback если он есть
                     if (isset($test['ai_feedback'])) {
                         $failedTest['ai_feedback'] = $test['ai_feedback'];
                         $aiFeedback[] = $test['ai_feedback'];
